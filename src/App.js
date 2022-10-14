@@ -1,46 +1,36 @@
-import {getAuth} from 'firebase/auth'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
+import LoginBootstrap from './Components/LoginBootstrap';
+import Main from './Components/Main/Main';
 import ResisterReactBootstrap from './Components/ResisterReactBootstrap';
-import app from './firebase/firebase.init';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Main></Main>,
+    children:[
+      {
+        path: '/',
+        element: <ResisterReactBootstrap></ResisterReactBootstrap>
+      },
+      {
+        path: '/resister',
+        element: <ResisterReactBootstrap></ResisterReactBootstrap>
+      },
+      {
+        path: '/login',
+        element: <LoginBootstrap></LoginBootstrap>
+      }
+    ]
+  }
+])
+
 function App() {
-  const auth = getAuth(app);
-
-  const handleResister = (event) =>{
-    event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    console.log(email, password)
-  }
-
-  const handleEmailBlur = event =>{
-    console.log(event.target.value)
-  }
-
-  const handlePasswordBlur = event =>{
-    console.log(event.target.value)
-  }
+  
 
   return (
     <div className="">
-      <ResisterReactBootstrap></ResisterReactBootstrap>
-
-
-
-
-
-
-
-
-
-
-
-      {/* <form onSubmit={handleResister}>
-        <input onBlur={handleEmailBlur} type="email" name="email" id="" placeholder='your email'/>
-        <br/>
-        <input onBlur={handlePasswordBlur} type="password" name="password" id="" placeholder='your password' />
-        <br/>
-        <button type="submit">Resister</button>
-      </form> */}
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }
